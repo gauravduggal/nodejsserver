@@ -7,7 +7,26 @@ http.createServer(function (req, res) {
   var q = url.parse(req.url, true);
   var query_str = q.path;
   //console.log(str);
-  var vars = query_str.split('&');
+  var query_parsed_str = parse_query(query_str);
+  console.log(query_parsed_str);
+  //console.log(query_parsed_str);
+  var filename = "." + q.pathname;
+  fs.readFile(filename, function(err, data)
+    {
+    if (err)
+     {
+      res.writeHead(404, {'Content-Type': 'text/html'});
+       return res.end("404 Not Found");
+     }  
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
+
+function parse_query(url_str)
+{
+  var vars = url_str.split('&');
   //console.log(vars)
   var query_parsed_str = []; 
   for (var i=0; i<vars.length;i++)
@@ -38,19 +57,7 @@ http.createServer(function (req, res) {
       }
 
 
-
   }
-  console.log(query_parsed_str);
-  var filename = "." + q.pathname;
-  fs.readFile(filename, function(err, data)
-    {
-    if (err)
-     {
-      res.writeHead(404, {'Content-Type': 'text/html'});
-       return res.end("404 Not Found");
-     }  
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(data);
-    return res.end();
-  });
-}).listen(8080);
+  //console.log(query_parsed_str);
+  return query_parsed_str;
+}
