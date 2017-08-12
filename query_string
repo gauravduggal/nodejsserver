@@ -1,1 +1,1 @@
-http://localhost:8080/?stat=mean&attr=sepal_length&iris=iris-setosa
+http://localhost:8080/?stat=mean&attr=sepal_length&iris=Iris-setosa
