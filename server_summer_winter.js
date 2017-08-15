@@ -2,20 +2,8 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
-var mysql = require('mysql');
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Coconut#12",
-  database: "IOT"
-});
 
-con.connect(function(err) {
-  if (err)
-    throw new Error("Oops something happened");
-  console.log("Connected!");
-});
 
 
 http.createServer(function (req, res) {
@@ -26,16 +14,12 @@ http.createServer(function (req, res) {
   //parse string to get various fields
   var query_parsed_str = parse_query(query_str);
   console.log(query_parsed_str);
-  //convert parsed string to a mysql query
-  //var mysql_query = 'select '+query_parsed_str[0]+'('+query_parsed_str[1]+') from flower where iris=\''+query_parsed_str[2]+'\';';
-  var mysql_query_str=generate_mysql_query_str(query_parsed_str);
-  console.log(mysql_query_str); 
-  //send query to mysql server
-  query_mysql(res,mysql_query_str,query_parsed_str);  
-  
+  res.writeHead(404, {'Content-Type': 'text/html'});
+      return res.end("404 Not Found");
+      
 }).listen(8080);
 
-
+/*
 function query_mysql(res,mysql_query_str,query_parsed_str)
 {
   con.query(mysql_query_str, function(err, rows, fields)
@@ -64,14 +48,7 @@ function query_mysql(res,mysql_query_str,query_parsed_str)
       return res.end();
   });
 }
-
-///generate mysql query from the parsed url string
-function generate_mysql_query_str(query_parsed_str)
-{
-  var mysql_query = 'select '+query_parsed_str[0]+'('+query_parsed_str[1]+') from flower where iris=\''+query_parsed_str[2]+'\';';
-  return mysql_query;
-}
-
+*/
 
 //parses url string for stat={min,max,median} ,attr={sepal_length, sepal_width, petal_length, petal_width}
 //and iris = Iris-setosa,Iris-versicolor,Iris-virginica
