@@ -101,7 +101,7 @@ function max(data_obj, u_attribute)
     if (max<data_obj[i][u_attribute])
       max=data_obj[i][u_attribute];
   }
-  console.log('max is: '+max);
+  //console.log('max is: '+max);
   return max;
 }
 
